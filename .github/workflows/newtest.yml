@@ -27,10 +27,10 @@ jobs:
 
       # Runs a set of commands using the runners shell
       - name: condition1
-        if: ${{input.num}} > 4 
+        if: ${{inputs.num}} > 4 
         run: echo "larger than four"
         
       # Runs a set of commands using the runners shell
       - name: condition2
-        if: ${{input.num}} < 4 
+        if: ${{inputs.num}} < 4 
         run: echo "larger than four"
