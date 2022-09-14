@@ -26,9 +26,9 @@ jobs:
       # Runs a single command using the runners shell
       - name: Run a one-line script
         run: | 
-          if (( 3 > 5 )); then
-          echo "${{ inputs.num }}"
+          if (( ${{ inputs.num }} > 5 )); then
+          echo "greater"
           else
-          echo "wrong!"
+          echo "smaller"
           fi
 
