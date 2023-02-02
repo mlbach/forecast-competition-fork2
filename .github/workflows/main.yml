@@ -12,10 +12,10 @@ jobs:
         run: date +%s > report.txt
       - name: git stuff
         run: |
-          git config --global user.email "you@example.com"
-          git config --global user.name "Github Actions Bot"
           git add report.txt
           git commit -m 'new test report'
           git push
+        env:
+          GH_TOKEN: ${{secrets.GITHUB_TOKEN}}
           
       
