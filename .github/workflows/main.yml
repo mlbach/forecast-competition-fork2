@@ -17,7 +17,5 @@ jobs:
           git add report.txt
           git commit -m 'new test report'
           git push
-        env:
-          GH_TOKEN: ${{secrets.GITHUB_TOKEN}}
           
       
