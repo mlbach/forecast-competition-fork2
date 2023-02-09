@@ -36,7 +36,7 @@ jobs:
           -f body='Please pull these awesome changes in!' \
           -f head='prtest' \
           -f base='main')"
-          echo "$PR.number"
+          echo {{$PR.number}}
         env:
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
           OWNER: ${{ github.repository_owner }}
