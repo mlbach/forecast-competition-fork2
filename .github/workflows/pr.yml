@@ -28,14 +28,15 @@ jobs:
       
       - name: create PR
         run: |
-          gh api \
+          PR="$(gh api \
           --method POST \
           -H "Accept: application/vnd.github+json" \
           /repos/$OWNER/$REPO/pulls \
           -f title='Amazing new feature' \
           -f body='Please pull these awesome changes in!' \
           -f head='prtest' \
-          -f base='main' # call python script to echo
+          -f base='main')"
+          echo "$PR.number"
         env:
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
           OWNER: ${{ github.repository_owner }}
