@@ -35,8 +35,8 @@ jobs:
           -f title='Amazing new feature' \
           -f body='Please pull these awesome changes in!' \
           -f head='prtest' \
-          -f base='main')"
-          echo {{$PR.number}}
+          -f base='main' --jq '.number')"
+          echo {{$PR}}
         env:
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
           OWNER: ${{ github.repository_owner }}
