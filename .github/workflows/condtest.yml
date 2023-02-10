@@ -22,11 +22,13 @@ jobs:
           /repos/$OWNER/$REPO/pulls/15 --jq '.mergeable')"
           if [ "$IS_MERGEABLE" == true ]; then
             echo "It's true logically"
+          fi
           if [ "$IS_MERGEABLE" = true ]; then
             echo "It's also true logically"
+          fi
           if [ "$IS_MERGEABLE" == "true" ]; then
             echo "It's true from a strings perspective"
-          
+          fi
           echo $IS_MERGEABLE
         # state (open)
         env:
