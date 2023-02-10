@@ -1,0 +1,29 @@
+name: TryMerge
+on:
+  workflow_dispatch:
+  
+jobs:
+  create:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - uses: actions/checkout@v3
+        with: 
+          ref: prtest
+      #- uses: actions/setup-python@v4
+      #  with:
+      #    python-version: '3.8'
+      #    cache: 'pip'
+      #- run: pip install -r requirements.txt
+      - name: merge
+        run: |
+          gh api \
+          --method PUT \
+          -H "Accept: application/vnd.github+json" \
+          /repos/$OWNER/$REPO/pulls/15/merge \
+          -f commit_title='Expand enum' \
+          -f commit_message='Add a new value to the merge_method enum' 
+        env:
+          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+          OWNER: ${{ github.repository_owner }}
+          REPO: ${{ github.event.repository.name }}
