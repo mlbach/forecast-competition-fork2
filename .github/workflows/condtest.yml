@@ -17,17 +17,21 @@ jobs:
       #- run: pip install -r requirements.txt
       - name: get PR
         run: |
+          res="$(gh api \
+          -H "Accept: application/vnd.github+json" \
+          /repos/$OWNER/$REPO/pulls/15)"
+          echo $res
           IS_MERGEABLE="$(gh api \
           -H "Accept: application/vnd.github+json" \
           /repos/$OWNER/$REPO/pulls/15 --jq '.mergeable')"
           echo $IS_MERGEABLE
-          if [ $IS_MERGEABLE == true ]; then
+          if [[$IS_MERGEABLE == true ]]; then
             echo "It's true logically"
           fi
-          if [ $IS_MERGEABLE = true ]; then
+          if [[ $IS_MERGEABLE = true ]]; then
             echo "It's also true logically"
           fi
-          if [ $IS_MERGEABLE == "true" ]; then
+          if [[ $IS_MERGEABLE == "true" ]]; then
             echo "It's true from a strings perspective"
           fi
 
