@@ -37,16 +37,17 @@ jobs:
           -f head='prtest' \
           -f base='main' --jq '.number')"
           echo $PR_NUM
-          echo "PR_TO_MERGE=$PR_NUM" >> $GITHUB_ENV
+          echo "PR_TO_MERGE=$(($PR_NUM))" >> $GITHUB_ENV
         env:
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
           OWNER: ${{ github.repository_owner }}
           REPO: ${{ github.event.repository.name }}
       - name: get PR
         run: |
+          echo $PR_TO_MERGE
           IS_MERGEABLE="$(gh api \
           -H "Accept: application/vnd.github+json" \
-          /repos/$OWNER/$REPO/pulls)"
+          /repos/OWNER/REPO/pulls/$(($PR_TO_MERGE)))"
           echo $IS_MERGEABLE
         # state (open)
         env:
