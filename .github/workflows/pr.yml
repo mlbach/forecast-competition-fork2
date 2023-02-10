@@ -10,11 +10,11 @@ jobs:
       - uses: actions/checkout@v3
         with: 
           ref: prtest
-      - uses: actions/setup-python@v4
-        with:
-          python-version: '3.8'
-          cache: 'pip'
-      - run: pip install -r requirements.txt
+      #- uses: actions/setup-python@v4
+      #  with:
+      #    python-version: '3.8'
+      #    cache: 'pip'
+      #- run: pip install -r requirements.txt
       
       - name: Create report file
         run: date +%s > report.txt
@@ -28,7 +28,7 @@ jobs:
       
       - name: create PR
         run: |
-          PR="$(gh api \
+          PR_NUM="$(gh api \
           --method POST \
           -H "Accept: application/vnd.github+json" \
           /repos/$OWNER/$REPO/pulls \
@@ -36,9 +36,22 @@ jobs:
           -f body='Please pull these awesome changes in!' \
           -f head='prtest' \
           -f base='main' --jq '.number')"
-          echo {{$PR}}
+          echo $PR_NUM
+          echo "PR_TO_MERGE=$PR_NUM" >> $GITHUB_ENV
         env:
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
           OWNER: ${{ github.repository_owner }}
           REPO: ${{ github.event.repository.name }}
+      - name: get PR
+        run: |
+          IS_MERGEABLE="$(gh api \
+          -H "Accept: application/vnd.github+json" \
+          /repos/OWNER/REPO/pulls/$env.PR_TO_MERGE) --jq '.mergeable'"
+          echo $IS_MERGEABLE
+        # state (open)
+        env:
+          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+          OWNER: ${{ github.repository_owner }}
+          REPO: ${{ github.event.repository.name }}
+          
       
