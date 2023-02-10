@@ -46,7 +46,7 @@ jobs:
         run: |
           IS_MERGEABLE="$(gh api \
           -H "Accept: application/vnd.github+json" \
-          /repos/OWNER/REPO/pulls/$env.PR_TO_MERGE) --jq '.mergeable'"
+          /repos/$OWNER/$REPO/pulls/$env.PR_TO_MERGE) --jq '.mergeable'"
           echo $IS_MERGEABLE
         # state (open)
         env:
