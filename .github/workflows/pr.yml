@@ -1,0 +1,58 @@
+name: PullRequester
+on:
+  workflow_dispatch:
+  
+jobs:
+  create:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - uses: actions/checkout@v3
+        with: 
+          ref: prtest
+      #- uses: actions/setup-python@v4
+      #  with:
+      #    python-version: '3.8'
+      #    cache: 'pip'
+      #- run: pip install -r requirements.txt
+      
+      - name: Create report file
+        run: date +%s > report.txt
+      - name: commit & push
+        run: |
+          git config --global user.email "${GITHUB_ACTOR}@users.noreply.github.com"
+          git config --global user.name "${GITHUB_ACTOR}"
+          git add report.txt
+          git commit -m 'new test report'
+          git push
+      
+      - name: create PR
+        run: |
+          PR_NUM="$(gh api \
+          --method POST \
+          -H "Accept: application/vnd.github+json" \
+          /repos/$OWNER/$REPO/pulls \
+          -f title='Amazing new feature' \
+          -f body='Please pull these awesome changes in!' \
+          -f head='prtest' \
+          -f base='main' --jq '.number')"
+          echo $PR_NUM
+          echo "PR_TO_MERGE=$(($PR_NUM))" >> $GITHUB_ENV
+        env:
+          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+          OWNER: ${{ github.repository_owner }}
+          REPO: ${{ github.event.repository.name }}
+      - name: get PR
+        run: |
+          echo $PR_TO_MERGE
+          IS_MERGEABLE="$(gh api \
+          -H "Accept: application/vnd.github+json" \
+          /repos/$OWNER/$REPO/pulls/$PR_TO_MERGE)"
+          echo $IS_MERGEABLE
+        # state (open)
+        env:
+          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+          OWNER: ${{ github.repository_owner }}
+          REPO: ${{ github.event.repository.name }}
+          
+      
