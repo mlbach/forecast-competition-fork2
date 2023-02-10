@@ -1,0 +1,35 @@
+name: TestCondition
+on:
+  workflow_dispatch:
+  
+jobs:
+  create:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - uses: actions/checkout@v3
+        with: 
+          ref: prtest
+      #- uses: actions/setup-python@v4
+      #  with:
+      #    python-version: '3.8'
+      #    cache: 'pip'
+      #- run: pip install -r requirements.txt
+      - name: get PR
+        run: |
+          IS_MERGEABLE="$(gh api \
+          -H "Accept: application/vnd.github+json" \
+          /repos/$OWNER/$REPO/pulls/15 --jq '.mergeable')"
+          if [ "$IS_MERGEABLE" == true ]; then
+            echo "It's true logically"
+          if [ "$IS_MERGEABLE" = true ]; then
+            echo "It's also true logically"
+          if [ "$IS_MERGEABLE" == "true" ]; then
+            echo "It's true from a strings perspective"
+          
+          echo $IS_MERGEABLE
+        # state (open)
+        env:
+          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+          OWNER: ${{ github.repository_owner }}
+          REPO: ${{ github.event.repository.name }}
