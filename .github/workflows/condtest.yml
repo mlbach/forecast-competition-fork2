@@ -20,6 +20,7 @@ jobs:
           IS_MERGEABLE="$(gh api \
           -H "Accept: application/vnd.github+json" \
           /repos/$OWNER/$REPO/pulls/15 --jq '.mergeable')"
+          echo $IS_MERGEABLE
           if [ "$IS_MERGEABLE" == true ]; then
             echo "It's true logically"
           fi
@@ -29,7 +30,7 @@ jobs:
           if [ "$IS_MERGEABLE" == "true" ]; then
             echo "It's true from a strings perspective"
           fi
-          echo $IS_MERGEABLE
+
         # state (open)
         env:
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
