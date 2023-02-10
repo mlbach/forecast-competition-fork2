@@ -47,7 +47,19 @@ jobs:
           echo $PR_TO_MERGE
           IS_MERGEABLE="$(gh api \
           -H "Accept: application/vnd.github+json" \
-          /repos/$OWNER/$REPO/pulls/$PR_TO_MERGE)"
+          /repos/$OWNER/$REPO/pulls/$PR_TO_MERGE --jq '.mergeable')"
+          i=0
+          while [[ $IS_MERGEABLE="null" ]] && (($i < 10 ))
+          do
+            echo $IS_MERGEABLE
+            echo $i
+            sleep 10s
+            IS_MERGEABLE="$(gh api \
+            -H "Accept: application/vnd.github+json" \
+            /repos/$OWNER/$REPO/pulls/$PR_TO_MERGE --jq '.mergeable')"
+            i=$((i+1))
+          done
+          
           echo $IS_MERGEABLE
         # state (open)
         env:
