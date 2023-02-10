@@ -34,6 +34,12 @@ jobs:
           if [[ $IS_MERGEABLE == "true" ]]; then
             echo "It's true from a strings perspective"
           fi
+          if [[ $IS_MERGEABLE != "true" ]]; then
+            echo "The string is something else than 'true'"
+          fi
+          if [[ $IS_MERGEABLE == "null" ]]; then
+            echo "The string is actually null"
+          fi
 
         # state (open)
         env:
