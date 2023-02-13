@@ -47,7 +47,7 @@ jobs:
           gh api \
           --method PUT \
           -H "Accept: application/vnd.github+json" \
-          /repos/$OWNER/$REPO/pulls/$env.PR_TO_MERGE/merge \
+          /repos/$OWNER/$REPO/pulls/${{env.PR_TO_MERGE}}/merge \
           -f commit_title='Expand enum' \
           -f commit_message='Add a new value to the merge_method enum' 
         env:
