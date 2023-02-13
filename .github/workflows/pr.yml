@@ -42,29 +42,18 @@ jobs:
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
           OWNER: ${{ github.repository_owner }}
           REPO: ${{ github.event.repository.name }}
-      - name: get PR
+      - name: merge
         run: |
-          echo $PR_TO_MERGE
-          IS_MERGEABLE="$(gh api \
+          gh api \
+          --method PUT \
           -H "Accept: application/vnd.github+json" \
-          /repos/$OWNER/$REPO/pulls/$PR_TO_MERGE --jq '.mergeable')"
-          i=0
-          while [[ $IS_MERGEABLE=="null" ]] && (($i < 3 ))
-          do
-            echo $IS_MERGEABLE
-            echo $i
-            sleep 10s
-            IS_MERGEABLE="$(gh api \
-            -H "Accept: application/vnd.github+json" \
-            /repos/$OWNER/$REPO/pulls/$PR_TO_MERGE --jq '.mergeable')"
-            i=$((i+1))
-          done
-          
-          echo $IS_MERGEABLE
-        # state (open)
+          /repos/$OWNER/$REPO/pulls/$env.PR_NUM/merge \
+          -f commit_title='Expand enum' \
+          -f commit_message='Add a new value to the merge_method enum' 
         env:
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
           OWNER: ${{ github.repository_owner }}
           REPO: ${{ github.event.repository.name }}
+
           
       
