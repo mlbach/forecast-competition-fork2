@@ -28,7 +28,9 @@ jobs:
           any::urca
     # Run R script
     - name: Run baseline models
-      run: R -e 'print("hello")'
+      run: |
+        R -e 'library(parallel)'
+        R -e 'print("hello")'
       #run: Rscript example/baselines.R
       
  # Add new files in data folder, commit along with other modified files, push
