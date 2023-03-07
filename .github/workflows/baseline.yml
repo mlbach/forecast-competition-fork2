@@ -21,15 +21,15 @@ jobs:
       run: |
         R -e 'install.packages("tidyverse")'
         R -e 'install.packages("rvest")'
-        R -e 'install.packages("dplyr")
-        R -e 'install.packages("readr")
-        R -e 'install.packages("tidyr")
-        R -e 'install.packages("fable")
-        R -e 'install.packages("tsibble")
-        R -e 'install.packages("lubridate")
-        R -e 'install.packages("arrow")
-        R -e 'install.packages("parallel")
-        R -e 'install.packages("stringr")
+        R -e 'install.packages("dplyr")'
+        R -e 'install.packages("readr")'
+        R -e 'install.packages("tidyr")'
+        R -e 'install.packages("fable")'
+        R -e 'install.packages("tsibble")'
+        R -e 'install.packages("lubridate")'
+        R -e 'install.packages("arrow")'
+        R -e 'install.packages("parallel")'
+        R -e 'install.packages("stringr")'
     # Run R script
     - name: Run baseline models
       run: R -e 'print("hello")'
