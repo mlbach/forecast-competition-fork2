@@ -18,11 +18,8 @@ jobs:
     - uses: r-lib/actions/setup-r-dependencies@v2
       with: 
         extra-packages: |
-          any::tidyverse
           any::rvest
-          any::dplyr
           any::readr
-          any::tidyr
           any::fable
           any::tsibble
           any::lubridate
