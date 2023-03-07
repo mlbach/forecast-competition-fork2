@@ -24,7 +24,6 @@ jobs:
           any::tsibble
           any::lubridate
           any::arrow
-          any::parallel
           any::stringr
           any::urca
     # Run R script
