@@ -1,5 +1,5 @@
 Package: baselines
-Title: What the Package Does (One Line, Title Case)
+Title: What the Package Does
 Version: 0.0.0.9000
 Authors@R: 
     person("First", "Last", , "first.last@example.com", role = c("aut", "cre"),
@@ -13,4 +13,13 @@ RoxygenNote: 7.0.0
 Imports:
     dplyr,
     tidyr,
-	tidyverse
+	tidyverse,
+	rvest,
+	readr,
+	fable,
+	tsibble,
+	lubridate,
+	arrow,
+	stringr,
+	urca
+	  
