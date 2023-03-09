@@ -3,8 +3,8 @@ name: baseline_submissions
 # Controls when the action will run.
 on:
   workflow_dispatch:
-  #schedule:
-  #  - cron:  '0 14 * * 1'  # should be 
+  schedule:
+    - cron:  '0 14 * * 0'  # runs only at 2 pm on Sundays
 
 jobs: 
   baselines:
@@ -16,22 +16,22 @@ jobs:
     - uses: actions/checkout@v3
     - uses: r-lib/actions/setup-r@v2
     - uses: r-lib/actions/setup-r-dependencies@v2
-      with: 
-        extra-packages: |
-          any::rvest
-          any::readr
-          any::fable
-          any::tsibble
-          any::lubridate
-          any::arrow
-          any::stringr
-          any::urca
+      #with: 
+      #  extra-packages: |
+      #    any::rvest
+      #    any::readr
+      #    any::fable
+      #    any::tsibble
+      #    any::lubridate
+      #    any::arrow
+      #    any::stringr
+      #    any::urca
     # Run R script
     - name: Run baseline models
-      run: |
-        R -e 'library(parallel)'
-        R -e 'print("hello")'
-      #run: Rscript example/baselines.R
+      #run: |
+      #  R -e 'library(parallel)'
+      #  R -e 'print("hello")'
+      run: Rscript scripts/test.R
       
  # Add new files in data folder, commit along with other modified files, push
     #- name: Commit files
