@@ -6,17 +6,36 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
-    
     steps:
-    - name: test
-      run: |
-        day=$(date +"%u")
-        echo "DOWEEK=$((day))" >> $GITHUB_ENV
-           
-    - name: funday
-      if: env.DOWEEK == 5
-      run: echo "friday = funday!"
+      - uses: actions/checkout@v3
+        with:
+          ref: submit
+      - uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'
+          cache: 'pip' # caching pip dependencies
+      - run: |
+          day=$(date +"%u")
+          echo "DOWEEK=$((day))" >> $GITHUB_ENV
 
-    - name: otherday
-      if: env.DOWEEK != 5
-      run: echo "good, it's just a normal day"
+      - name: Skipping now
+        if: env.DOWEEK == 7  # sunday
+        run: echo "Thank you for your submission! It will be evaluated on the next scheduled run!"
+
+      - name: Install requirements
+        if: env.DOWEEK != 7
+        run: pip install -r requirements.txt
+    #steps:
+    #- name: test
+    #  run: |
+    #    day=$(date +"%u")
+    #    echo "DOWEEK=$((day))" >> $GITHUB_ENV
+    #       
+    #- name: funday
+    #  if: env.DOWEEK == 5
+    #  run: echo "friday = funday!"
+
+    #- name: otherday
+    #  if: env.DOWEEK != 5
+    #  run: echo "good, it's just a normal day"
+    
