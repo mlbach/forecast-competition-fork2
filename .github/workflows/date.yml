@@ -15,8 +15,10 @@ jobs:
         # let pipeline fail
       if: '$(date +"%u" == 5)'
       run: |
-        echo "We don't want to run this on fridays, exiting gracefully."
-        exit 0
+        if date +"%u" == 5; then
+          echo "We don't want to run this on fridays, exiting gracefully."
+          exit 0
+        fi
         
     - name: funday
       run: echo "friday = funday!"
