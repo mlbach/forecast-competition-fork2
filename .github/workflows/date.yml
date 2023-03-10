@@ -10,3 +10,13 @@ jobs:
     steps:
     - name: test
       run: echo $(date +"%u")
+      
+    - name: if_friday
+        # let pipeline fail
+      if: ${{ date +"%u" == 5}}
+      run: |
+        echo "We don't want to run this on fridays, exiting gracefully."
+        exit 0
+        
+    - name: funday
+      run: echo "friday = funday!"
