@@ -2,8 +2,8 @@ name: Cron Test
 
 on:
   workflow_dispatch:
-  schedule:
-  - cron: '23 * * * *'
+  #schedule:
+  #- cron: '23 * * * *'
 
 jobs:
   one:
